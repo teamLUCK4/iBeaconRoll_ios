@@ -9,13 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, luck4!")
-        }
-        .padding()
+        Text("🧭 iBeacon View 연결 중...")
+        RangeBeaconView()
+            .edgesIgnoringSafeArea(.all)
     }
 }
 

@@ -24,14 +24,28 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		552F373C2DD9DBDC009A207A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EBDF86D72DD9CE4E00CAEE2F /* ibeaconroll_ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ibeaconroll_ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBDF86E82DD9CE4F00CAEE2F /* ibeaconroll_iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ibeaconroll_iosTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBDF86F22DD9CE4F00CAEE2F /* ibeaconroll_iosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ibeaconroll_iosUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		552F37392DD9D9C3009A207A /* Exceptions for "ibeaconroll_ios" folder in "ibeaconroll_ios" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			platformFiltersByRelativePath = {
+				RangeBeaconView.swift = (ios, );
+			};
+			target = EBDF86D62DD9CE4E00CAEE2F /* ibeaconroll_ios */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		EBDF86D92DD9CE4E00CAEE2F /* ibeaconroll_ios */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				552F37392DD9D9C3009A207A /* Exceptions for "ibeaconroll_ios" folder in "ibeaconroll_ios" target */,
+			);
 			path = ibeaconroll_ios;
 			sourceTree = "<group>";
 		};
@@ -75,6 +89,7 @@
 		EBDF86CE2DD9CE4E00CAEE2F = {
 			isa = PBXGroup;
 			children = (
+				552F373C2DD9DBDC009A207A /* Info.plist */,
 				EBDF86D92DD9CE4E00CAEE2F /* ibeaconroll_ios */,
 				EBDF86EB2DD9CE4F00CAEE2F /* ibeaconroll_iosTests */,
 				EBDF86F52DD9CE4F00CAEE2F /* ibeaconroll_iosUITests */,
@@ -392,7 +407,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ibeaconroll_ios/Preview Content\"";
-				DEVELOPMENT_TEAM = SCDJJYX64B;
+				DEVELOPMENT_TEAM = 93783Z3ZB6;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -431,7 +446,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ibeaconroll_ios/Preview Content\"";
-				DEVELOPMENT_TEAM = SCDJJYX64B;
+				DEVELOPMENT_TEAM = 93783Z3ZB6;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<!--
-   Info.plist
-   ibeaconroll_ios
-
-   Created by 김다연 on 5/18/25.
-   Copyright (c) 2025 ___ORGANIZATIONNAME___. All rights reserved.
--->
 <plist version="1.0">
-<dict/>
+<dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>항상 위치 권한을 허용해야 비콘 기능이 작동합니다.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>비콘 신호 감지를 위해 항상 위치 권한이 필요합니다</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>비콘을 감지하려면 위치 권한이 필요합니다.
+비콘을 감지하려면 위치 권한이 필요합니다.</string>
+</dict>
 </plist>

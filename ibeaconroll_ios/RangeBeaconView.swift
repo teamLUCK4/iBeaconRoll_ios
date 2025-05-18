@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import UIKit
 
-struct RangeBeaconView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+struct RangeBeaconView: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> RangeBeaconViewController {
+        return RangeBeaconViewController()
     }
-}
 
-#Preview {
-    RangeBeaconView()
+    func updateUIViewController(_ uiViewController: RangeBeaconViewController, context: Context) {
+        // 업데이트 필요 없음
+    }
 }
