@@ -24,7 +24,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		552F373C2DD9DBDC009A207A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EBDF86D72DD9CE4E00CAEE2F /* ibeaconroll_ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ibeaconroll_ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBDF86E82DD9CE4F00CAEE2F /* ibeaconroll_iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ibeaconroll_iosTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBDF86F22DD9CE4F00CAEE2F /* ibeaconroll_iosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ibeaconroll_iosUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -89,7 +88,6 @@
 		EBDF86CE2DD9CE4E00CAEE2F = {
 			isa = PBXGroup;
 			children = (
-				552F373C2DD9DBDC009A207A /* Info.plist */,
 				EBDF86D92DD9CE4E00CAEE2F /* ibeaconroll_ios */,
 				EBDF86EB2DD9CE4F00CAEE2F /* ibeaconroll_iosTests */,
 				EBDF86F52DD9CE4F00CAEE2F /* ibeaconroll_iosUITests */,
@@ -411,6 +409,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ibeaconroll-ios-Info.plist";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -426,7 +425,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.1;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "luck4.ibeaconroll-ios";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dayeonkim.ibeaconroll;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
@@ -450,6 +449,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ibeaconroll-ios-Info.plist";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -465,7 +465,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.1;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "luck4.ibeaconroll-ios";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dayeonkim.ibeaconroll;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";

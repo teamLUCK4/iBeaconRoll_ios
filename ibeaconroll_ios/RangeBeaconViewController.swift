@@ -13,6 +13,12 @@ class RangeBeaconViewController: UIViewController, UITableViewDelegate, UITableV
 
     override func viewDidLoad() {
         super.viewDidLoad()
+                
+        // ✅ iBeacon 위치 권한 설정 및 delegate 연결
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+
+        
 
         // ✅ SwiftUI에서 안 보이는 문제 방지
         view.backgroundColor = .systemBackground
@@ -25,10 +31,6 @@ class RangeBeaconViewController: UIViewController, UITableViewDelegate, UITableV
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
         self.view.addSubview(tableView)
         self.tableViewRef = tableView
-
-        // ✅ iBeacon 위치 권한 설정 및 delegate 연결
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
 
         // ✅ 앱 실행하자마자 기본 UUID 감지 시작
         if let uuid = UUID(uuidString: defaultUUID) {
@@ -55,8 +57,18 @@ class RangeBeaconViewController: UIViewController, UITableViewDelegate, UITableV
     }
 
     // MARK: - CLLocationManagerDelegate
+    func locationManager(_ manager: CLLocationManager, didStartMonitoringFor region: CLRegion) {
+        print("🚀 모니터링 시작됨: \(region.identifier)")
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("❌ 위치 매니저 에러: \(error.localizedDescription)")
+    }
+
 
     func locationManager(_ manager: CLLocationManager, didDetermineState state: CLRegionState, for region: CLRegion) {
+        print("📍 didDetermineState 호출됨 — state: \(state.rawValue), region: \(region.identifier)")
+
         guard let beaconRegion = region as? CLBeaconRegion else { return }
 
         if state == .inside {
