@@ -1,7 +1,7 @@
 import UIKit
 import CoreLocation
 
-class RangeBeaconViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
+class RangeBeaconViewController: UIViewController, UITableViewDelegate, CLLocationManagerDelegate {
 
     let defaultUUID = "ADD8CE0A-EF05-4B57-AD8C-7651198EAB2C"
     
@@ -28,16 +28,18 @@ class RangeBeaconViewController: UIViewController, UITableViewDelegate, UITableV
         
 
         // ✅ SwiftUI에서 안 보이는 문제 방지
-        view.backgroundColor = .systemBackground
+//        view.backgroundColor = .systemBackground
+        view.backgroundColor = .clear
 
         // ✅ 테이블 뷰 생성 및 설정
-        let tableView = UITableView(frame: self.view.bounds, style: .plain)
-        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
-        self.view.addSubview(tableView)
-        self.tableViewRef = tableView
+//        let tableView = UITableView(frame: self.view.bounds, style: .plain)
+//        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//        tableView.delegate = self
+//        tableView.dataSource = self
+//        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
+//        self.view.addSubview(tableView)
+//        self.tableViewRef = tableView
+
 
         // ✅ 앱 실행하자마자 기본 UUID 감지 시작
         if let uuid = UUID(uuidString: defaultUUID) {
@@ -111,6 +113,7 @@ class RangeBeaconViewController: UIViewController, UITableViewDelegate, UITableV
         if !hasSentRequest, let nearest = allBeacons.first, nearest.proximity == .immediate {
             hasSentRequest = true
             sendAttendanceUpdate()
+
         }
         
         
@@ -172,40 +175,100 @@ class RangeBeaconViewController: UIViewController, UITableViewDelegate, UITableV
         if beacons.isEmpty {
             return 1
         }
-        return Array(beacons.values)[section].count
+        
+        
     }
-
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if beacons.isEmpty {
-            return nil
+    
+    func sendAttendanceUpdate() {
+        guard let url = URL(string: "http://192.168.4.5:8080/api/attendance") else {
+            print("❌ URL이 잘못됨")
+            return
         }
 
-        let sectionKeys = Array(beacons.keys)
-        let sectionKey = sectionKeys[section]
-        switch sectionKey {
-        case .immediate: return "Immediate"
-        case .near: return "Near"
-        case .far: return "Far"
-        default: return "Unknown"
+        var request = URLRequest(url: url)
+        request.httpMethod = "PUT"  // ✅ PUT 요청
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        // ✅ 보내고자 하는 JSON 바디
+        let payload: [String: Any] = [
+            "student_id": 1,
+            "status": "Present",
+            "classroom": "Building 302",
+            "attendance_date": "2025-05-13"
+        ]
+
+        // JSON 변환
+        guard let httpBody = try? JSONSerialization.data(withJSONObject: payload) else {
+            print("❌ JSON 변환 실패")
+            return
         }
+
+        request.httpBody = httpBody
+
+        // ✅ 네트워크 요청 실행
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("❌ 요청 실패: \(error.localizedDescription)")
+                return
+            }
+
+            if let httpResponse = response as? HTTPURLResponse {
+                print("✅ 요청 완료 - 응답 코드: \(httpResponse.statusCode)")
+            }
+
+            if let data = data,
+               let responseString = String(data: data, encoding: .utf8) {
+                print("📦 응답 데이터: \(responseString)")
+            }
+
+        }.resume()
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
 
-        if beacons.isEmpty {
-            cell.textLabel?.text = "🔍 아직 감지된 비콘이 없습니다."
-            cell.detailTextLabel?.text = nil
-            return cell
-        }
+    // MARK: - UITableViewDataSource
 
-        let sectionKey = Array(beacons.keys)[indexPath.section]
-        let beacon = beacons[sectionKey]![indexPath.row]
-
-        cell.textLabel?.text = "UUID: \(beacon.uuid.uuidString)"
-        cell.detailTextLabel?.text = "Major: \(beacon.major), Minor: \(beacon.minor), RSSI: \(beacon.rssi)"
-
-        return cell
-    }
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return max(beacons.count, 1)
+//    }
+//
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        if beacons.isEmpty {
+//            return 1
+//        }
+//        return Array(beacons.values)[section].count
+//    }
+//
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        if beacons.isEmpty {
+//            return nil
+//        }
+//
+//        let sectionKeys = Array(beacons.keys)
+//        let sectionKey = sectionKeys[section]
+//        switch sectionKey {
+//        case .immediate: return "Immediate"
+//        case .near: return "Near"
+//        case .far: return "Far"
+//        default: return "Unknown"
+//        }
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+//
+//        if beacons.isEmpty {
+//            cell.textLabel?.text = "🔍 아직 감지된 비콘이 없습니다."
+//            cell.detailTextLabel?.text = nil
+//            return cell
+//        }
+//
+//        let sectionKey = Array(beacons.keys)[indexPath.section]
+//        let beacon = beacons[sectionKey]![indexPath.row]
+//
+//        cell.textLabel?.text = "UUID: \(beacon.uuid.uuidString)"
+//        cell.detailTextLabel?.text = "Major: \(beacon.major), Minor: \(beacon.minor), RSSI: \(beacon.rssi)"
+//
+//        return cell
+//    }
 }
 

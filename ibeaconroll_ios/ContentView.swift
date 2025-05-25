@@ -11,12 +11,15 @@ struct ContentView: View {
     @State private var isDataLoaded = false
     @State private var showAttendanceView = false
     @State private var dataLoadingError: String?
-    
+        
     var body: some View {
+        
         if showAttendanceView {
             AttendanceView()
         } else {
             ZStack {
+                RangeBeaconView()            
+                
                 // 배경 그라데이션
                 LinearGradient(
                     gradient: Gradient(colors: [Color.blue, Color.purple]),

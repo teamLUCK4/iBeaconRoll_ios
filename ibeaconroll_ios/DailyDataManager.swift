@@ -6,7 +6,8 @@ class DailyDataManager {
     private let cacheKey = "cachedData"
     private let dateKey = "lastFetchDate"
 
-    private let apiURL = URL(string: "http://localhost:8080/api/students/1/schedule/today")!  // 여기에 진짜 API 넣기
+    private let apiURL = URL(string: "http://192.168.4.5:8080/api/students/1/schedule/today")!  // 여기에 진짜 API 넣기
+
 
     private init() {}
 
