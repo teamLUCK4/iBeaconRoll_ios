@@ -16,7 +16,11 @@ class RangeBeaconViewController: UIViewController, UITableViewDelegate, UITableV
                 
         // ✅ iBeacon 위치 권한 설정 및 delegate 연결
         locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
+//        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestAlwaysAuthorization() // background 실행하기 위해
+        locationManager.allowsBackgroundLocationUpdates = true
+
+
 
         
 
