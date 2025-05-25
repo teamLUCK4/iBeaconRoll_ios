@@ -5,7 +5,8 @@ class DailyDataManager {
     
     private let cacheKey = "cachedData"
     private let dateKey = "lastFetchDate"
-    private let apiURL = URL(string: "http://localhost:8080/api/students/1/schedule/today")!  // 여기에 진짜 API 넣기
+    private let apiURL = URL(string: "http://192.168.4.5:8080/api/students/1/schedule/today")!  // 여기에 진짜 API 넣기
+    
 
     private init() {}
 
@@ -61,6 +62,13 @@ class DailyDataManager {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter.string(from: date)
+    }
+    
+    // 캐시 클리어 함수 (개발/테스트용)
+    func clearCache() {
+        UserDefaults.standard.removeObject(forKey: cacheKey)
+        UserDefaults.standard.removeObject(forKey: dateKey)
+        print("🗑️ Cache cleared")
     }
 }
 
