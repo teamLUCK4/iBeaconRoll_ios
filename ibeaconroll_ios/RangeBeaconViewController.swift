@@ -10,9 +10,22 @@ class RangeBeaconViewController: UIViewController, UITableViewDelegate, UITableV
     var beacons = [CLProximity: [CLBeacon]]()
     
     var tableViewRef: UITableView?
+    
+    var hasSentRequest = false
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
+                
+        // ✅ iBeacon 위치 권한 설정 및 delegate 연결
+        locationManager.delegate = self
+//        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestAlwaysAuthorization() // background 실행하기 위해
+        locationManager.allowsBackgroundLocationUpdates = true
+
+
+
+        
 
         // ✅ SwiftUI에서 안 보이는 문제 방지
         view.backgroundColor = .systemBackground
@@ -25,10 +38,6 @@ class RangeBeaconViewController: UIViewController, UITableViewDelegate, UITableV
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
         self.view.addSubview(tableView)
         self.tableViewRef = tableView
-
-        // ✅ iBeacon 위치 권한 설정 및 delegate 연결
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
 
         // ✅ 앱 실행하자마자 기본 UUID 감지 시작
         if let uuid = UUID(uuidString: defaultUUID) {
@@ -55,8 +64,18 @@ class RangeBeaconViewController: UIViewController, UITableViewDelegate, UITableV
     }
 
     // MARK: - CLLocationManagerDelegate
+    func locationManager(_ manager: CLLocationManager, didStartMonitoringFor region: CLRegion) {
+        print("🚀 모니터링 시작됨: \(region.identifier)")
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("❌ 위치 매니저 에러: \(error.localizedDescription)")
+    }
+
 
     func locationManager(_ manager: CLLocationManager, didDetermineState state: CLRegionState, for region: CLRegion) {
+        print("📍 didDetermineState 호출됨 — state: \(state.rawValue), region: \(region.identifier)")
+
         guard let beaconRegion = region as? CLBeaconRegion else { return }
 
         if state == .inside {
@@ -86,7 +105,62 @@ class RangeBeaconViewController: UIViewController, UITableViewDelegate, UITableV
         }
 
         self.tableViewRef?.reloadData()
+        
+        
+        // ✅ 가까운 비콘이 있으면 한 번만 서버 요청 보내기
+        if !hasSentRequest, let nearest = allBeacons.first, nearest.proximity == .immediate {
+            hasSentRequest = true
+            sendAttendanceUpdate()
+        }
+        
+        
     }
+    
+    func sendAttendanceUpdate() {
+        guard let url = URL(string: "http://192.168.3.33:8080/api/attendance") else {
+            print("❌ URL이 잘못됨")
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "PUT"  // ✅ PUT 요청
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        // ✅ 보내고자 하는 JSON 바디
+        let payload: [String: Any] = [
+            "student_id": 1,
+            "status": "Present",
+            "classroom": "Building 302",
+            "attendance_date": "2025-05-13"
+        ]
+
+        // JSON 변환
+        guard let httpBody = try? JSONSerialization.data(withJSONObject: payload) else {
+            print("❌ JSON 변환 실패")
+            return
+        }
+
+        request.httpBody = httpBody
+
+        // ✅ 네트워크 요청 실행
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("❌ 요청 실패: \(error.localizedDescription)")
+                return
+            }
+
+            if let httpResponse = response as? HTTPURLResponse {
+                print("✅ 요청 완료 - 응답 코드: \(httpResponse.statusCode)")
+            }
+
+            if let data = data,
+               let responseString = String(data: data, encoding: .utf8) {
+                print("📦 응답 데이터: \(responseString)")
+            }
+
+        }.resume()
+    }
+
 
     // MARK: - UITableViewDataSource
 
