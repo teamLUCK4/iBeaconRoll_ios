@@ -8,6 +8,7 @@ class DailyDataManager {
 
     private let apiURL = URL(string: "http://192.168.4.5:8080/api/students/1/schedule/today")!  // 여기에 진짜 API 넣기
 
+
     private init() {}
 
     func getDailyData(completion: @escaping (Result<[String: Any], Error>) -> Void) {

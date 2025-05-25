@@ -11,11 +11,8 @@ struct ContentView: View {
     @State private var isDataLoaded = false
     @State private var showAttendanceView = false
     @State private var dataLoadingError: String?
-    
-    
+        
     var body: some View {
-        
-        
         
         if showAttendanceView {
             AttendanceView()
@@ -116,7 +113,6 @@ struct ContentView: View {
         }
         
     }
-    
     
     private func loadDailyData() {
         print("🚀 Starting daily data load...")
